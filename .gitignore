@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 实验产物与本地依赖（体积大，可重新生成）
+runs/
+.deps/
+*.ulg
+*.ulg.csv
+
+# 本地设计手册（不纳入版本控制）
+docs/design.md
+
+# 编辑器与系统文件
+.vscode/
+.idea/
+.DS_Store

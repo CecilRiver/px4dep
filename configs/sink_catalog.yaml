@@ -1,0 +1,98 @@
+# Framework-level sink catalog for the Commander health/protection chain.
+#
+# These matchers identify API contracts, not candidate parameters.  The Clang
+# indexer emits raw health/failsafe records; health_chain.py uses this catalog
+# to assign an analysis layer and effect.  No parameter name is encoded here.
+
+version: 1
+
+sinks:
+  - matcher: "call:Report::healthFailure"
+    layer: health_check
+    effect: health_report
+    description: "Health issue reported to health_report; also clears arming bits."
+
+  - matcher: "call:Report::armingCheckFailure"
+    layer: arming_check
+    effect: arming_report
+    description: "Arming-check failure; blocks arming in the requested mode groups."
+
+  - matcher: "call:Report::setIsPresent"
+    layer: presence
+    effect: presence
+    description: "Component presence bit in health_report."
+
+  - matcher: "call:Report::setHealth"
+    layer: health_state
+    effect: health_state
+    description: "Direct health/warning/error state update."
+
+  - matcher: "call:Report::clearArmingBits"
+    layer: mode_control
+    effect: arming_prohibition
+    description: "Directly clears can_arm bits for a mode set."
+
+  - matcher: "call:Report::clearCanRunBits"
+    layer: mode_control
+    effect: run_prohibition
+    description: "Clears can_run bits, preventing mode switching."
+
+  - matcher: "call:Report::canArm"
+    layer: mode_availability
+    effect: arming_query
+    description: "Query whether arming is possible for a navigation mode."
+
+  - matcher: "call:Report::canRun"
+    layer: mode_availability
+    effect: run_query
+    description: "Query whether a navigation mode can run while armed."
+
+  - matcher: "call:Report::modePreventsArming"
+    layer: mode_control
+    effect: arming_query
+    description: "Reads mode_req_prevent_arming; mode requires a switch before arming."
+
+  - matcher: "call:Report::failsafeFlags"
+    layer: flag_access
+    effect: flag_accessor
+    description: "Accessor to the failsafe_flags_s instance owned by Report."
+
+  - matcher: "call:Report::addExternalEvent"
+    layer: health_check
+    effect: external_event
+    description: "External health event accepted into the report buffer."
+
+  - matcher: "write:failsafe_flags_s::*"
+    layer: health_state
+    effect: health_flag_write
+    description: "Write to a failsafe flag input."
+
+  - matcher: "read:failsafe_flags_s::*"
+    layer: protection_condition
+    effect: health_flag_read
+    description: "Read of a failsafe flag by a health or protection predicate."
+
+  - matcher: "macro:CHECK_FAILSAFE"
+    layer: protection_condition
+    effect: protection_check
+    description: "Expands to checkFailsafe(offsetof(flag), last, current, options)."
+
+  - matcher: "call:FailsafeBase::checkFailsafe"
+    layer: protection_condition
+    effect: protection_check
+    description: "Failsafe condition with an explicit action-options expression."
+
+  - matcher: "call:FailsafeBase::modeCanRun"
+    layer: mode_availability
+    effect: mode_check
+    description: "Checks failsafe flags and mode requirements against one mode."
+
+  - matcher: "call:FailsafeBase::checkModeFallback"
+    layer: mode_fallback
+    effect: fallback_check
+    description: "Maps an unavailable user-intended mode to a fallback action."
+
+  - matcher: "enum:FailsafeBase::Action"
+    layer: protection_decision
+    effect: action_decision
+    description: "Protection action categories (Warn, RTL, Land, Disarm, ...)."

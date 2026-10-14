@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "px4dep"
+version = "0.1.0"
+description = "Static configuration-dependency analysis for PX4 EKF2/Commander (M1)"
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6",
+  "jsonschema>=4",
+]
+
+[project.optional-dependencies]
+ulog = ["pyulog>=1.0"]
+
+[project.scripts]
+px4dep = "px4dep.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: tests that read the local PX4 repository and the latest run",
+]

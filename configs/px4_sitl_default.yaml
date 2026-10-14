@@ -1,0 +1,78 @@
+# Baseline experiment configuration: PX4 v1.18.0-beta1 SITL default build.
+#
+# The PX4 tree is treated as read-only.  Every analyzer output is written under
+# runs/<run_id>/ in this project.
+
+px4:
+  repo: /home/cecilriver/PX4-Autopilot
+  expected_commit: 5356d24e5fa5
+  expected_describe: v1.18.0-beta1
+  build_variant: px4_sitl_default
+  build_dir: build/px4_sitl_default
+  parameters_json: build/px4_sitl_default/parameters.json
+  parameters_xml: build/px4_sitl_default/parameters.xml
+  compile_commands: build/px4_sitl_default/compile_commands.json
+
+  msg_dir: msg
+  msg_dirs:
+    - msg
+    - msg/versioned
+
+  # M1 scope: the EKF2 state estimator and the Commander health/failsafe chain.
+  scope_dirs:
+    - src/modules/ekf2
+    - src/modules/commander
+  exclude_dirs:
+    - src/modules/ekf2/test
+    - src/modules/commander/test
+
+  # Translation units analysed with Clang LibTooling.  Paths are relative to
+  # the PX4 repository and must appear in compile_commands.json.
+  tus:
+    - src/modules/ekf2/EKF2.cpp
+    - src/modules/ekf2/EKF2Selector.cpp
+    # M3: the whole EKF2 core and its aiding-source checks.  These TUs carry
+    # the parameter -> estimator field -> status flag/message data flow.
+    - src/modules/ekf2/EKF/*.cpp
+    - src/modules/ekf2/EKF/**/*.cpp
+    - src/modules/commander/Commander.cpp
+    - src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp
+    - src/modules/commander/HealthAndArmingChecks/Common.cpp
+    # M2: all commander health checks are small TUs and close the health layer.
+    - src/modules/commander/HealthAndArmingChecks/checks/*.cpp
+    - src/modules/commander/failsafe/framework.cpp
+    - src/modules/commander/failsafe/failsafe.cpp
+
+  sink_catalog: configs/sink_catalog.yaml
+
+  param_yaml_globs:
+    - src/**/module.yaml
+    - src/**/*parameters.yaml
+    - src/**/*params*.yaml
+
+# M5: authorized normal-scenario SITL log, used only to check whether the
+# topics/fields on static paths were present in one ordinary run.  The
+# analyzer records the declaration below but does not infer the scenario from
+# the log; it only verifies the firmware commit and reports parameter changes.
+# Unobserved topics are reported as "not observed", never as unreachable.
+ulog:
+  path: /home/cecilriver/PX4-Autopilot/build/px4_sitl_default/rootfs/log/2026-10-16/12_23_31.ulg
+  scenario: normal_sitl_unmodified_parameters
+
+clang_tool:
+  binary: .deps/bin/px4dep_clang_tool
+  build_script: cpp/px4dep_clang_tool/build.sh
+
+# M6: targeted LLVM fallback for the selected unresolved type.  The pass is
+# intentionally narrow (EKF aid-source publication binding), not a general
+# LLVM framework.  IR is emitted at -O0 because member field indices and the
+# ORB_ID metadata operand are explicit only without optimization.
+llvm:
+  clang: clang++-14
+  opt: opt-14
+  pass_plugin: .deps/bin/px4dep_member_topic.so
+  build_script: cpp/px4dep_llvm_pass/build.sh
+  ir_tu: src/modules/ekf2/EKF2.cpp
+  optimization: O0
+
+runs_root: runs
