@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/px4dep/evidence.schema.json",
+  "title": "Source evidence record",
+  "type": "object",
+  "required": ["kind", "id"],
+  "properties": {
+    "kind": {"type": "string", "enum": ["node", "edge"]},
+    "id": {"type": "string", "minLength": 1},
+    "entity_kind": {"type": "string"},
+    "relation": {"type": "string"},
+    "qualified_name": {"type": "string"},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low", ""]},
+    "source": {"type": "object"},
+    "evidence": {"type": "object"},
+    "build_guards": {"type": "array", "items": {"type": "string"}},
+    "build_guard_status": {"type": "string"}
+  },
+  "additionalProperties": true
+}

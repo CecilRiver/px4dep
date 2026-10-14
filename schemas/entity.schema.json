@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/px4dep/entity.schema.json",
+  "title": "Graph entity node",
+  "type": "object",
+  "required": ["id", "kind", "qualified_name", "build_variant"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {
+      "type": "string",
+      "enum": [
+        "parameter",
+        "param_wrapper",
+        "config_field",
+        "field",
+        "function",
+        "message_type",
+        "topic",
+        "topic_field",
+        "uorb_endpoint",
+        "predicate",
+        "health_flag",
+        "mode_capability",
+        "protection_decision",
+        "health_component",
+        "estimator_flag",
+        "slice_sink"
+      ]
+    },
+    "qualified_name": {"type": "string"},
+    "name": {"type": "string"},
+    "usr": {"type": "string"},
+    "build_variant": {"type": "string"},
+    "build_guards": {"type": "array", "items": {"type": "string"}},
+    "build_guard_status": {"type": "string", "enum": ["none", "evaluated", "unknown"]},
+    "source": {
+      "type": "object",
+      "required": ["file", "line"],
+      "properties": {
+        "file": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "column": {"type": "integer", "minimum": 0},
+        "expansion_file": {"type": "string"},
+        "expansion_line": {"type": "integer", "minimum": 0},
+        "spelling_file": {"type": "string"},
+        "spelling_line": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

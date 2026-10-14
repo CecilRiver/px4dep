@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/px4dep/parameter.schema.json",
+  "title": "PX4 parameter catalog record",
+  "type": "object",
+  "required": ["id", "kind", "qualified_name", "name", "build_variant", "in_build", "status"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"const": "parameter"},
+    "qualified_name": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+    "build_variant": {"type": "string"},
+    "in_build": {"type": "boolean"},
+    "status": {"type": "string"},
+    "source_kind": {"type": "string"},
+    "source": {
+      "type": ["object", "null"],
+      "properties": {
+        "file": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "group": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "wrapper_entities": {"type": "array", "items": {"type": "string"}},
+    "wrapper_count": {"type": "integer", "minimum": 0},
+    "registration_points": {"type": "array", "items": {"type": "object"}},
+    "type": {"type": "string"},
+    "default": {},
+    "min": {},
+    "max": {},
+    "increment": {},
+    "units": {"type": "string"},
+    "group": {"type": "string"},
+    "category": {"type": "string"},
+    "reboot_required": {"type": "boolean"},
+    "short_desc": {"type": "string"},
+    "long_desc": {"type": "string"},
+    "decimal_places": {},
+    "enum_values": {"type": "object"},
+    "bitmask": {},
+    "volatile": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}

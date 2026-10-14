@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/px4dep/edge.schema.json",
+  "title": "Graph evidence edge",
+  "type": "object",
+  "required": ["id", "kind", "relation", "src", "dst", "confidence", "evidence", "build_variant"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"const": "edge"},
+    "relation": {
+      "type": "string",
+      "enum": [
+        "instantiates",
+        "defines",
+        "field_type",
+        "wraps",
+        "binds_to",
+        "configures",
+        "lookup_parameter",
+        "reads_parameter",
+        "writes_parameter",
+        "publishes",
+        "subscribes",
+        "uses_uorb",
+        "selects_instance",
+        "calls",
+        "reports_health",
+        "reports_flag",
+        "reports_component",
+        "writes_flag",
+        "reads_flag",
+        "maps_to_field",
+        "requires_mode",
+        "restricts_arming",
+        "restricts_run",
+        "checks_mode",
+        "prevents_mode",
+        "queries_mode",
+        "has_mode_check",
+        "has_protection_condition",
+        "selects_action",
+        "returns_action",
+        "assigns_action",
+        "data_depends_on",
+        "control_depends_on"
+      ]
+    },
+    "src": {"type": "string", "minLength": 1},
+    "dst": {"type": "string", "minLength": 1},
+    "build_variant": {"type": "string"},
+    "build_guards": {"type": "array", "items": {"type": "string"}},
+    "build_guard_status": {"type": "string", "enum": ["none", "evaluated", "unknown"]},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "evidence": {
+      "type": "object",
+      "required": ["rule"],
+      "properties": {
+        "rule": {"type": "string", "minLength": 1},
+        "file": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "operation": {"type": "string"},
+        "method": {"type": "string"},
+        "target_expr": {"type": "string"},
+        "topic_expr": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
