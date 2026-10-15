@@ -1,0 +1,23 @@
+parameters:
+  - group: EKF2
+    definitions:
+      EKF2_BARO_CTRL:
+        description:
+          short: Barometer control
+          long: Enable barometer fusion.
+        type: boolean
+        default: 1
+        reboot_required: false
+      BAT${i}_A_PER_V:
+        description:
+          short: Battery current scaling
+          long: Current per volt for battery ${i}.
+        type: float
+        default: 0.5
+        unit: A/V
+        reboot_required: true
+      YAML_ONLY_PARAM:
+        description:
+          short: Only present in YAML
+        type: int32
+        default: 0

@@ -1,0 +1,57 @@
+{
+  "parameters": [
+    {
+      "name": "EKF2_BARO_CTRL",
+      "type": "boolean",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "units": "",
+      "group": "EKF2",
+      "category": "EKF2",
+      "shortDesc": "Barometer control",
+      "longDesc": "Enable barometer fusion.",
+      "rebootRequired": false,
+      "volatile": false
+    },
+    {
+      "name": "EKF2_GPS_CTRL",
+      "type": "int32",
+      "default": 0,
+      "min": 0,
+      "max": 7,
+      "unit": "",
+      "group": "EKF2",
+      "category": "EKF2",
+      "shortDesc": "GPS control",
+      "longDesc": "Bitmask selecting GPS measurements.",
+      "rebootRequired": false,
+      "volatile": false,
+      "values": [
+        {"value": 1, "description": "GPS position"},
+        {"value": 2, "description": "GPS velocity"}
+      ]
+    },
+    {
+      "name": "BAT1_A_PER_V",
+      "type": "float",
+      "default": 0.5,
+      "min": 0.0,
+      "max": 10.0,
+      "increment": 0.01,
+      "units": "A/V",
+      "group": "Battery",
+      "category": "Power",
+      "shortDesc": "Battery current scaling",
+      "longDesc": "Current per volt for battery 1.",
+      "rebootRequired": true,
+      "volatile": false
+    },
+    {
+      "name": "BUILD_ONLY_PARAM",
+      "type": "int32",
+      "default": 0,
+      "group": "Test"
+    }
+  ]
+}
