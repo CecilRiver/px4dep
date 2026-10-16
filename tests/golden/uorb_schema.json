@@ -1,0 +1,85 @@
+{
+  "messages": [
+    "estimator_aid_source1d_s",
+    "quatf_s",
+    "sensor_accel_s",
+    "vehicle_attitude_s"
+  ],
+  "topics": [
+    ["estimator_aid_src_baro_hgt", "estimator_aid_source1d_s"],
+    ["estimator_aid_src_gnss_pos", "estimator_aid_source1d_s"],
+    ["quatf", "quatf_s"],
+    ["sensor_accel", "sensor_accel_s"],
+    ["vehicle_attitude", "vehicle_attitude_s"],
+    ["vehicle_attitude_groundtruth", "vehicle_attitude_s"]
+  ],
+  "topic_fields": [
+    "estimator_aid_source1d_s::MAX_INSTANCES",
+    "estimator_aid_source1d_s::estimator_instance",
+    "estimator_aid_source1d_s::innovation_rejected",
+    "estimator_aid_source1d_s::test_ratio",
+    "estimator_aid_source1d_s::test_ratio_filtered",
+    "estimator_aid_source1d_s::timestamp",
+    "estimator_aid_source1d_s::timestamp_sample",
+    "quatf_s::w",
+    "quatf_s::x",
+    "quatf_s::y",
+    "quatf_s::z",
+    "sensor_accel_s::CLIP_X",
+    "sensor_accel_s::VERSION",
+    "sensor_accel_s::device_id",
+    "sensor_accel_s::timestamp",
+    "sensor_accel_s::x",
+    "sensor_accel_s::y",
+    "sensor_accel_s::z",
+    "vehicle_attitude_s::QUAT_MAX",
+    "vehicle_attitude_s::delta_q_reset",
+    "vehicle_attitude_s::q",
+    "vehicle_attitude_s::timestamp"
+  ],
+  "constants": [
+    "estimator_aid_source1d_s::MAX_INSTANCES",
+    "sensor_accel_s::CLIP_X",
+    "sensor_accel_s::VERSION",
+    "vehicle_attitude_s::QUAT_MAX"
+  ],
+  "arrays": [
+    "estimator_aid_source1d_s::test_ratio_filtered",
+    "vehicle_attitude_s::delta_q_reset"
+  ],
+  "nested": [
+    "vehicle_attitude_s::q"
+  ],
+  "edges": [
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::MAX_INSTANCES"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::estimator_instance"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::innovation_rejected"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::test_ratio"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::test_ratio_filtered"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::timestamp"],
+    ["defines", "estimator_aid_source1d_s", "estimator_aid_source1d_s::timestamp_sample"],
+    ["defines", "quatf_s", "quatf_s::w"],
+    ["defines", "quatf_s", "quatf_s::x"],
+    ["defines", "quatf_s", "quatf_s::y"],
+    ["defines", "quatf_s", "quatf_s::z"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::CLIP_X"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::VERSION"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::device_id"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::timestamp"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::x"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::y"],
+    ["defines", "sensor_accel_s", "sensor_accel_s::z"],
+    ["defines", "vehicle_attitude_s", "vehicle_attitude_s::QUAT_MAX"],
+    ["defines", "vehicle_attitude_s", "vehicle_attitude_s::delta_q_reset"],
+    ["defines", "vehicle_attitude_s", "vehicle_attitude_s::q"],
+    ["defines", "vehicle_attitude_s", "vehicle_attitude_s::timestamp"],
+    ["field_type", "vehicle_attitude_s::q", "quatf_s"],
+    ["instantiates", "estimator_aid_src_baro_hgt", "estimator_aid_source1d_s"],
+    ["instantiates", "estimator_aid_src_gnss_pos", "estimator_aid_source1d_s"],
+    ["instantiates", "quatf", "quatf_s"],
+    ["instantiates", "sensor_accel", "sensor_accel_s"],
+    ["instantiates", "vehicle_attitude", "vehicle_attitude_s"],
+    ["instantiates", "vehicle_attitude_groundtruth", "vehicle_attitude_s"]
+  ],
+  "unresolved": []
+}
